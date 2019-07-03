@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Psychic Game</title>
+        <link rel="stylesheet" type="text/css" href="">
+    </head>
+    <body>
+    <h2>The Psychic Game:</h2>
+    <br>
+    <p id="wins">Wins:</p>
+    <p id="losses">Losses:</p>
+    <p>Guesses left: <span id="guesses"></span></p>
+   <p id="guessesSoFar">Your Guesses so far:</p>
+    <script type="text/javascript">
+            //variable containing all letters
+            var letters=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'];
+            var guessLeft=7;
+            var wins=1;
+			function randomLetter(){
+                //generate random letter
+                //since you have everything inside letters[] array, it is signifying that it wants a random letter instead of a number
+                var letter = letters[Math.floor(Math.random()*letters.length)];
+                //when you call var = letter, it produces whatever letter is at the index that was randomly produced by the math code
+                //var letter = letters[3] = 'd'
+                //if the random letter is the key you press then >>
+                console.log(letter) 
+                return letter;
+            } 
+            //this variable computerGames is storing the random letter
+            var computerGuess = randomLetter();
+            //creating an array to store letters guessed
+            var guessesSoFar=[];
+            function letterGuess(event){
+                //variable guess is containing whatever key I click
+                var guess = event.key;
+                //when the guess does not include one of the letters in the array, it will return false
+                if(!letters.includes(guess)){
+                    return
+                }
+                console.log(guess);
+                //pushing letter guessed into the array
+                guessesSoFar.push(guess);
+                console.log(guessesSoFar);
+                //selecting the element that has the id 'guessesSoFar' and adding(appending) to the end of that element whatever goes inside the appendChild(), which is my array
+                document.getElementById("guessesSoFar").append(guess);
+                
+                if(computerGuess===guess){
+                //return the random letter
+                //not sure where to go from here
+                // return letter
+                    alert("Win");
+                    document.getElementById("wins").textContent=wins++;
+                }
+				else {
+					alert("wrong letter")
+                    document.getElementById("guesses").textContent=guessLeft--;
+				}
+            }
+            document.addEventListener("keyup",letterGuess);
+            // if(guessLeft==7)(
+
+            // )
+    </script>
+    </body>
+</html>
+<html>
