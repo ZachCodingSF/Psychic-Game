@@ -4,19 +4,29 @@
         <meta charset="UTF-8">
         <title>Psychic Game</title>
         <link rel="stylesheet" type="text/css" href="">
+        <style>body{
+            background-image: url(img/felt.png)
+        }
+        </style>
     </head>
     <body>
     <h2>The Psychic Game:</h2>
+    <p>*Guess what letter the computer generated*</p>
     <br>
-    <p id="wins">Wins:</p>
-    <p id="losses">Losses:</p>
+    <p>Wins:<span id="wins"></span></p>
+    <p>Losses:<span id="losses"></span></p>
+                        <!-- added this span in front of the <p> tag so that the p tag doesn't get erased -->
     <p>Guesses left: <span id="guesses"></span></p>
-   <p id="guessesSoFar">Your Guesses so far:</p>
+   <p>Your Guesses so far: <span id="guessesSoFar"></span></p>
     <script type="text/javascript">
+
+
             //variable containing all letters
             var letters=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'];
             var guessLeft=7;
             var wins=1;
+            var losses=1;
+            var guessesSpan = document.getElementById("guesses")
 			function randomLetter(){
                 //generate random letter
                 //since you have everything inside letters[] array, it is signifying that it wants a random letter instead of a number
@@ -24,24 +34,27 @@
                 //when you call var = letter, it produces whatever letter is at the index that was randomly produced by the math code
                 //var letter = letters[3] = 'd'
                 //if the random letter is the key you press then >>
-                console.log(letter) 
+                console.log('letter',letter);
                 return letter;
             } 
+
+
+
             //this variable computerGames is storing the random letter
             var computerGuess = randomLetter();
             //creating an array to store letters guessed
             var guessesSoFar=[];
-            function letterGuess(event){
+            function letterGuess(){
                 //variable guess is containing whatever key I click
                 var guess = event.key;
                 //when the guess does not include one of the letters in the array, it will return false
                 if(!letters.includes(guess)){
                     return
                 }
-                console.log(guess);
+                console.log('guess',guess);
                 //pushing letter guessed into the array
                 guessesSoFar.push(guess);
-                console.log(guessesSoFar);
+                console.log('guessesSoFar',guessesSoFar);
                 //selecting the element that has the id 'guessesSoFar' and adding(appending) to the end of that element whatever goes inside the appendChild(), which is my array
                 document.getElementById("guessesSoFar").append(guess);
                 
@@ -49,19 +62,36 @@
                 //return the random letter
                 //not sure where to go from here
                 // return letter
-                    alert("Win");
+                    // alert("Win");
                     document.getElementById("wins").textContent=wins++;
+
+                    //generate random letter if win increases
+                    computerGuess = randomLetter();
+
                 }
 				else {
-					alert("wrong letter")
-                    document.getElementById("guesses").textContent=guessLeft--;
+					// alert("wrong letter")
+                    //made it more efficient by creating a guessesSpan variable that contains my .getElementByID
+                    guessesSpan.textContent=guessLeft--;
 				}
+                
+                //creating control flow to have the guesses left reset to 7 if the guesses left hit 0;
+                if (guessLeft==-1){
+                    guessLeft=7;
+                    // this is increasing the loss to 1 if the user runs out of guesses
+                    document.getElementById("losses").textContent=losses++;
+                    document.getElementById("guessesSoFar").textContent='';
+                    }
+                // for(guessesSoFar=0;guessesSoFar>8;guessesSoFar=0);
+                
             }
-            document.addEventListener("keyup",letterGuess);
+                document.addEventListener("keyup",letterGuess);
+
+
             // if(guessLeft==7)(
 
             // )
+        
     </script>
     </body>
 </html>
-<html>
